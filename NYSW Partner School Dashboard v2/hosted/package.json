@@ -1,0 +1,9 @@
+{
+  "name": "nysw-partner-school-dashboard",
+  "version": "2.0.0",
+  "private": true,
+  "description": "NY Sun Works Partner School Success Dashboard (hosted, zero dependencies)",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" }
+}

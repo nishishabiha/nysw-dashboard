@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner School Success Dashboard · NY Sun Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#80BC00; --green-d:#3F6B00; --green-dd:#255007; --green-l:#EEF6DA; --green-xl:#F6FAEA;
+  --slate:#55585A; --ink:#2B2D2E; --mute:#8A8E90; --line:#E6E8E3; --bg:#FAFBF7; --card:#fff;
+  --yellow:#FED932; --yellow-l:#FFF6CC; --red:#F83311; --red-l:#FFE9E4; --orange:#F08A1C; --orange-l:#FFF0DC;
+  --r:14px;
+  --f:'Open Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; --fh:'Montserrat','Open Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--f);color:var(--slate);background:var(--bg);font-size:14px;line-height:1.5}
+h1,h2,h3,h4{font-family:var(--fh);color:var(--slate);margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+a{color:var(--green-d)}
+.hide{display:none!important}
+/* header */
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.top-in{max-width:1320px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo{font-family:var(--fh);font-weight:800;line-height:.9;font-size:19px;letter-spacing:-.5px;color:var(--green);text-transform:uppercase;display:block}
+.logo b{color:var(--slate);font-weight:800}
+.brand small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700;margin-top:3px}
+nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+nav button{background:none;border:0;padding:10px 12px;font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);border-bottom:3px solid transparent;border-radius:0}
+nav button:hover{color:var(--green-d)}
+nav button.on{color:var(--green-d);border-bottom-color:var(--green)}
+nav .badge{display:inline-block;background:var(--red);color:#fff;border-radius:10px;padding:0 6px;font-size:10px;margin-left:5px;vertical-align:1px}
+.who{display:flex;align-items:center;gap:8px;font-size:12px}
+.btn{background:var(--yellow);color:#000;border:0;border-radius:15px;padding:8px 16px;font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em}
+.btn:hover{filter:brightness(.96)}
+.btn.g{background:var(--green);color:#10260a}
+.btn.o{background:#fff;border:1.5px solid var(--green);color:var(--green-d)}
+.btn.s{padding:5px 11px;font-size:11px;border-radius:11px}
+.btn.d{background:#fff;border:1.5px solid var(--line);color:var(--slate)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+main{max-width:1320px;margin:0 auto;padding:22px 24px 80px}
+.hero{padding:6px 0 14px}
+.hero h1{font-size:30px;font-weight:800;text-transform:uppercase;letter-spacing:-.3px}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p{margin:6px 0 0;max-width:820px;color:var(--slate)}
+.asof{display:inline-flex;gap:6px;align-items:center;background:var(--green-l);color:var(--green-dd);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;margin-top:10px}
+/* cards */
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.card h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tile{border-top:4px solid var(--green);padding-top:14px}
+.tile.red{border-top-color:var(--red)} .tile.yel{border-top-color:var(--yellow)} .tile.org{border-top-color:var(--orange)}
+.tile .lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--mute)}
+.tile .big{font-family:var(--fh);font-size:34px;font-weight:800;color:var(--ink);line-height:1.1;margin:2px 0}
+.tile .sub{font-size:12px;color:var(--slate)}
+.tile.click{cursor:pointer}.tile.click:hover{box-shadow:0 3px 10px rgba(63,107,0,.14)}
+.sec{margin:26px 0 10px;display:flex;align-items:end;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sec h2{font-size:18px;text-transform:uppercase}
+.sec h2 em{font-style:normal;color:var(--green)}
+.sec span{font-size:12px;color:var(--mute)}
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:12px;padding:1px 9px;font-size:11px;font-weight:700;white-space:nowrap}
+.c-high{background:var(--red-l);color:#B21D04}.c-med{background:var(--orange-l);color:#9B5A07}.c-low{background:var(--yellow-l);color:#7A6100}
+.c-up{background:#E9F1FB;color:#2A5C99}.c-ok{background:var(--green-l);color:var(--green-dd)}.c-n{background:#EEF0EE;color:var(--slate)}
+.grade{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:8px;font-family:var(--fh);font-weight:800;font-size:13px}
+.gA,.gB{background:var(--green);color:#10260a}.gC{background:var(--yellow);color:#000}.gD{background:var(--orange);color:#fff}.gF{background:var(--red);color:#fff}.gP{background:#E4E6E3;color:var(--slate)}
+/* table */
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.tools input,.tools select,.f input,.f select,.f textarea{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;background:#fff;color:var(--ink)}
+.tools input[type=search]{min-width:250px}
+.tools input:focus,.tools select:focus,.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--green);outline-offset:0;border-color:var(--green)}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tbl th{background:var(--green-xl);text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:9px 10px;color:var(--slate);white-space:nowrap;cursor:pointer;user-select:none;border-bottom:1px solid var(--line)}
+.tbl th.ns{cursor:default}
+.tbl td{padding:8px 10px;border-bottom:1px solid #F0F2EC;vertical-align:middle}
+.tbl tr.row{cursor:pointer}.tbl tr.row:hover td{background:var(--green-xl)}
+.tbl tr:last-child td{border-bottom:0}
+.nm b{color:var(--ink);font-weight:700}.nm small{color:var(--mute);display:block;font-size:11px}
+.bar{height:7px;border-radius:5px;background:#ECEEE8;overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--green);border-radius:5px}
+.bar.y i{background:var(--yellow)}.bar.r i{background:var(--red)}.bar.o i{background:var(--orange)}
+.muted{color:var(--mute)}.right{text-align:right}
+.pager{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px}
+/* alerts */
+.al{display:flex;gap:12px;padding:11px 14px;border:1px solid var(--line);border-left:5px solid var(--yellow);border-radius:12px;background:#fff;margin-bottom:8px}
+.al.high{border-left-color:var(--red)}.al.med{border-left-color:var(--orange)}.al.upcoming{border-left-color:#4A86C9}
+.al .t{flex:1;min-width:0}.al .t b{color:var(--ink)}
+.al .act{font-size:12px;color:var(--green-dd);margin-top:2px}
+.al .btns{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end}
+.al.done{opacity:.6}
+/* drawer */
+.ov{position:fixed;inset:0;background:rgba(30,35,25,.35);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(860px,100vw);background:var(--bg);z-index:41;overflow:auto;box-shadow:-8px 0 30px rgba(0,0,0,.15)}
+.dh{background:#fff;padding:18px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2;display:flex;gap:14px;align-items:flex-start}
+.dh h2{font-size:21px}.dh .x{margin-left:auto;background:none;border:0;font-size:26px;line-height:1;color:var(--mute)}
+.db{padding:18px 24px 60px;display:grid;gap:14px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kv div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.kv small{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--mute)}
+.kv span{font-weight:700;color:var(--ink)}
+.wk{display:flex;gap:5px;flex-wrap:wrap}
+.wk div{width:54px;text-align:center;font-size:10px;padding:5px 0;border-radius:8px;background:#EEF0EE;color:var(--slate);font-weight:700}
+.wk .ok{background:var(--green);color:#10260a}.wk .late{background:#CDE79A;color:#2d4b06}.wk .miss{background:var(--red);color:#fff}.wk .exc{background:var(--yellow-l);color:#7A6100}.wk .none{background:#F3F4F1;color:#B6BAB6}
+.stage{display:flex;gap:0;align-items:center;margin:6px 0 2px}
+.stage div{flex:1;text-align:center;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#A9ADA9;position:relative;padding-top:16px}
+.stage div:before{content:"";position:absolute;top:3px;left:0;right:0;height:5px;background:#E4E6E3}
+.stage div:after{content:"";position:absolute;top:-1px;left:50%;margin-left:-6px;width:12px;height:12px;border-radius:50%;background:#E4E6E3;border:2px solid #fff}
+.stage div.on{color:var(--green-dd)}.stage div.on:before,.stage div.on:after{background:var(--green)}
+.stage div:first-child:before{left:50%}.stage div:last-child:before{right:50%}
+.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.note.pin{border-color:var(--yellow);background:#FFFDF0}
+.note .m{font-size:11px;color:var(--mute);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:3px}
+.note p{margin:0;white-space:pre-wrap;color:var(--ink)}
+.f{display:grid;gap:8px}.f textarea{width:100%;min-height:70px;resize:vertical}
+.f .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.src{font-size:11px;color:var(--mute)}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
+summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.mini{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}.mini th{text-align:left;color:var(--mute);font-size:10.5px;text-transform:uppercase;padding:3px 6px}.mini td{padding:4px 6px;border-top:1px solid #F0F2EC;vertical-align:top}
+.ktbl td,.ktbl th{padding:6px 8px}
+.num{width:78px;text-align:right}
+.tot{font-family:var(--fh);font-weight:800;font-size:22px}
+.tot.bad{color:var(--red)}.tot.good{color:var(--green-d)}
+.callout{border-radius:12px;padding:12px 16px;background:var(--yellow-l);border:1px solid #F1DB6A;color:#5b4a00;font-size:13px}
+.callout.g{background:var(--green-xl);border-color:#CFE59A;color:var(--green-dd)}
+.callout.r{background:var(--red-l);border-color:#F5B7AA;color:#8a1a05}
+.lim li{margin-bottom:7px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--green-dd);color:#fff;padding:9px 18px;border-radius:20px;z-index:99;font-weight:700;font-size:13px}
+@media(max-width:800px){.top-in{flex-wrap:wrap;gap:8px}.g2{grid-template-columns:1fr}.hero h1{font-size:22px}}
+@media print{.top,.tools,.btn{display:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#"><span class="logo">NY<b>SUN</b><br>WORKS<small>Partner School Success</small></span></a>
+  <nav id="nav"></nav>
+  <div class="who"><span class="muted" id="whoLbl"></span><button class="btn s d" id="whoBtn">Set name</button><button class="btn s g" id="expBtn">Backup</button></div>
+</div></header>
+<main id="main"></main>
+<div id="ovl"></div>
+
+<script>/*__DATA__*/</script>
+<script>
+'use strict';
+const DATA = window.NYSW_DATA;
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp = (x,a=0,b=1) => Math.min(b, Math.max(a, x));
+const fmtD = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+const fmtDY = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+const dayDiff = (a,b) => Math.round((new Date(a+'T12:00:00') - new Date(b+'T12:00:00'))/864e5);
+const pct = x => x==null ? '—' : Math.round(x*100)+'%';
+const avg = a => a.length ? a.reduce((x,y)=>x+y,0)/a.length : null;
+const clone = o => JSON.parse(JSON.stringify(o));
+
+/* ===================== RUBRIC (editable) ===================== */
+const GROUPS = {care:'Lab care & reporting', growth:'Harvest & growth', teach:'Teacher & student engagement', lead:'Leadership & relationships'};
+const DEFAULT_CFG = {
+  settings:{
+    asOf: DATA.meta.asOf, evalThrough: DATA.meta.evalThrough,
+    graceWeeks:1, cadenceAware:true, minConfidence:35,
+    harvestRampStart:'2026-11-01', harvestRampEnd:'2027-01-15', harvestWarn:'2026-12-01', harvestDue:'2027-01-01',
+    amvAnnualTarget:3, amvMilestones:['2026-12-15','2027-03-01','2027-06-01'],
+    bands:{A:90,B:80,C:70,D:60},
+    staleDays:21, offlineStreak:3, missedStreak:2
+  },
+  kpis:[
+    {id:'completion',g:'care',label:'Weekly asset completion',src:'GST Schedule + GST Asset',w:18,floor:.5,target:.95,on:true,unit:'%',hint:'Scheduled visit weeks with an asset logged. Cadence-aware (every-other-week / monthly schools are not penalized for off weeks) and make-up visits within the grace window count.'},
+    {id:'systems',g:'care',label:'Systems running',src:'GST Asset',w:7,floor:.6,target:1,on:true,unit:'%',hint:'Share of GST reports with no system marked "not running".'},
+    {id:'pests',g:'care',label:'Pest- & leak-free visits',src:'GST Asset',w:3,floor:.6,target:.97,on:true,unit:'%',hint:'Share of reports with no pest or leak issue.'},
+    {id:'seedlings',g:'care',label:'Seedlings planted',src:'GST Asset',w:4,floor:.2,target:.8,on:true,unit:'%',hint:'Share of answered "Are seedlings planted?" that are Yes.'},
+    {id:'labrating',g:'care',label:'Lab impression & cleanliness',src:'Area Manager Visit',w:6,floor:2,target:4.5,on:true,unit:'/5',hint:'Mean of AM overall impression and cleanliness (1-5). Only when an AMV exists.'},
+    {id:'harvest',g:'growth',label:'Harvests logged this year',src:'GST Asset',w:14,floor:0,target:3,on:true,unit:'#',hint:'Distinct harvest days logged. Points phase in between the ramp dates, so harvest cannot drag a grade down before crops are ready.'},
+    {id:'teacherconv',g:'teach',label:'Teacher conversation at visits',src:'GST Asset',w:6,floor:.3,target:.85,on:true,unit:'%',hint:'Yes = 1, spoke on phone/text = 0.5, No = 0.'},
+    {id:'training',g:'teach',label:'Training follow-through',src:'Ed Team + Schedule',w:10,floor:.4,target:1,on:true,unit:'%',hint:'Completed sessions vs sessions completed + no-shows + scheduled "TT" visits with no training logged.'},
+    {id:'curriculum',g:'teach',label:'Curriculum in use',src:'Area Manager Visit',w:4,floor:.5,target:1,on:true,unit:'%',hint:'AMV: "Is the teacher using the curriculum?" Yes=1, has questions=0.5.'},
+    {id:'edrubric',g:'teach',label:'Ed team pedagogy rubric',src:'Ed Team',w:4,floor:1,target:3.5,on:true,unit:'/4',hint:'Mean of the five domains on the latest session that was scored (1-4).'},
+    {id:'teacherinv',g:'teach',label:'Teacher involvement (AM rating)',src:'Area Manager Visit',w:4,floor:2,target:4.5,on:true,unit:'/5',hint:'AMV teacher involvement/communication rating (1-5).'},
+    {id:'principal',g:'lead',label:'Principal / AP engagement',src:'Area Manager Visit',w:12,floor:.25,target:.9,on:true,unit:'%',hint:'In-person with Principal = 1, Assistant Principal = 0.75, none but follow-up email = 0.4, none = 0.'},
+    {id:'amcadence',g:'lead',label:'Area manager visit pace',src:'Area Manager Visit',w:8,floor:0,target:1,on:true,unit:'%',hint:'AM visits vs the milestones due so far (3 per year). Counted only once a milestone is due or a visit exists.'}
+  ]
+};
+const KDEF = id => DEFAULT_CFG.kpis.find(k => k.id===id);
+
+/* ===================== STATE / STORAGE ===================== */
+const LS = 'nysw_psd_v2';
+let ST;
+try { ST = JSON.parse(localStorage.getItem(LS)||'null'); } catch(e) { ST = null; }
+if (!ST) ST = {user:'', notes:{}, ov:{}, alerts:{}, rubrics:[], snaps:[]};
+if (!ST.rubrics.length) ST.rubrics.push({v:1, ts:new Date().toISOString(), by:'System default', note:'Starting rubric (redesigned from Area Manager feedback, Nov 2026)', cfg:clone(DEFAULT_CFG)});
+const save = () => { try { localStorage.setItem(LS, JSON.stringify(ST)); } catch(e) { toast('Could not save (browser storage is full or blocked).'); } };
+const activeCfg = () => ST.rubrics[ST.rubrics.length-1].cfg;
+let UI = {tab:'today', q:'', am:'', gst:'', boro:'', grade:'', stage:'', flag:'', sort:'score', dir:1, page:0, open:null, aq:{am:'', rule:'', sev:'', st:'open'}, draft:null};
+function toast(m){ const t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+
+/* ===================== ENGINE ===================== */
+function schoolView(s){ // apply local overrides
+  const o = ST.ov[s.code]||{};
+  return Object.assign({}, s, {amEff: o.am || s.am || 'Unassigned', excluded: !!o.excl, amOv: !!o.am});
+}
+function rampFrac(set){ const a=dayDiff(set.asOf,set.harvestRampStart), b=dayDiff(set.harvestRampEnd,set.harvestRampStart); return clamp(a/b); }
+function completion(s,set){
+  const W = s.weeks.filter(w => w.w <= set.evalThrough);
+  const win = set.cadenceAware ? (s.cadence==='EOW'?1:s.cadence==='Monthly'?3:0) : 0;
+  let den=0, ok=0, late=0, exc=0, trail=0; const cells=[];
+  W.forEach((w,i)=>{
+    if(!w.s){ cells.push({w:w.w, st: w.d?'ok':'none'}); return; }
+    if(w.d){den++;ok++;trail=0;cells.push({w:w.w,st:'ok'});return;}
+    let lateOK=false;
+    for(let g=1;g<=set.graceWeeks;g++){ const n=W[i+g]; if(n && n.d >= (n.s?2:1)){lateOK=true;break;} }
+    let ex=false;
+    for(let g=1;g<=win;g++){ if((W[i-g]&&W[i-g].d)||(W[i+g]&&W[i+g].d)){ex=true;break;} }
+    if(lateOK){den++;late++;ok++;trail=0;cells.push({w:w.w,st:'late'});return;}
+    if(ex){exc++;cells.push({w:w.w,st:'exc'});return;}
+    den++;trail++;cells.push({w:w.w,st:'miss'});
+  });
+  return {den, ok, late, exc, trail, rate: den>=2 ? ok/den : null, cells, missed: cells.filter(c=>c.st==='miss').map(c=>c.w)};
+}
+function harvestInfo(s){
+  const days = [...new Set(s.harvest.map(h=>h.d))];
+  const lbs = s.harvest.reduce((a,h)=>a+(h.lb||0),0);
+  return {n:days.length, lbs, last: days.sort().pop()||null, amb: s.harvest.some(h=>h.amb)};
+}
+function stageOf(s,set,H){
+  const asOf=set.asOf;
+  if(H.n>0){ return {i: (H.last && dayDiff(asOf,H.last)<=35) ? 4 : 3, label: (H.last && dayDiff(asOf,H.last)<=35)?'Harvesting':'Harvested'}; }
+  const nh = s.agg.nextHarvest;
+  if(s.agg.lastSeed==='No' && s.agg.seedYes===0) return {i:0,label:'Not planted'};
+  if(nh && dayDiff(nh,asOf)<-14) return {i:2,label:'Harvest overdue',warn:true};
+  if(nh && dayDiff(nh,asOf)<=21) return {i:3,label:'Harvest soon'};
+  if(s.agg.seedYes>0) return {i:s.agg.seedYes>=3?2:1,label: s.agg.seedYes>=3?'Growing':'Seedlings'};
+  return {i:-1,label:'No growth data'};
+}
+const PMAP = v => !v?null : /^Yes - Principal/.test(v)?1 : /^Yes - Vice/.test(v)?.75 : null;
+function kpiValues(s,cfg){
+  const set=cfg.settings, a=s.agg, out={};
+  const C=completion(s,set); out.completion={v:C.rate, disp: C.den? `${C.ok}/${C.den} weeks`+(C.late?` (${C.late} late)`:'')+(C.exc?`, ${C.exc} off-cycle`:''):'no schedule', avail:C.rate!=null};
+  out.systems={v:a.n>=2?1-a.offN/a.n:null, disp:`${a.n-a.offN}/${a.n} reports clean`, avail:a.n>=2};
+  out.pests={v:a.n>=2?clamp(1-(a.pestN+a.leakN)/a.n):null, disp:`${a.pestN} pest, ${a.leakN} leak`, avail:a.n>=2};
+  const sk=a.seedYes+a.seedNo; out.seedlings={v:sk>=2?a.seedYes/sk:null, disp:`${a.seedYes}/${sk} yes`, avail:sk>=2};
+  const A=s.amv; const imp=[], inv=[], cur=[], pr=[];
+  A.forEach(x=>{ const m=avg([x.imp,x.clean].filter(z=>z!=null)); if(m!=null) imp.push(m); if(x.inv!=null) inv.push(x.inv);
+    if(x.curr) cur.push(x.curr==='Yes'?1:x.curr==='No'?0:.5);
+    let p=PMAP(x.pconv); if(p==null&&x.pconv){ p = x.fu==='Yes'?.4:0; } if(p!=null) pr.push(p); });
+  out.labrating={v:avg(imp), disp:imp.length?avg(imp).toFixed(1)+' / 5':'no AMV', avail:imp.length>0};
+  out.teacherinv={v:avg(inv), disp:inv.length?avg(inv).toFixed(1)+' / 5':'no AMV', avail:inv.length>0};
+  out.curriculum={v:avg(cur), disp:cur.length?pct(avg(cur)):'no AMV', avail:cur.length>0};
+  out.principal={v:avg(pr), disp:pr.length?pct(avg(pr)):'no AMV', avail:pr.length>0};
+  const H=harvestInfo(s), rf=rampFrac(set);
+  out.harvest={v:H.n, disp:`${H.n} harvest${H.n===1?'':'s'}`+(H.lbs?` · ${H.lbs.toFixed(1)} lb`:''), avail:a.n>0 && rf>0, rf};
+  const tc=(a.convYes+.5*a.convPhone)/(a.n||1); out.teacherconv={v:a.n>=2?tc:null, disp:`${a.convYes} in-person, ${a.convPhone} phone, ${a.convNo} none`, avail:a.n>=2};
+  // training
+  const done=s.ed.filter(e=>!e.ns && e.sess && !/^PD/i.test(e.sess)).length;
+  const gdone=s.gtr.filter(g=>!s.ed.some(e=>e.d && Math.abs(dayDiff(e.d,g.d))<=3)).length;
+  const ns=s.ed.filter(e=>e.ns).length;
+  const ttw=(s.tt||[]).filter(w=>w<=set.evalThrough);
+  const ttLogged=ttw.filter(w=>{const d0=w, d1=new Date(new Date(w+'T12:00:00').getTime()+9*864e5).toISOString().slice(0,10);
+     return s.ed.some(e=>!e.ns&&e.d&&e.d>=d0&&e.d<=d1) || s.gtr.some(g=>g.d>=d0&&g.d<=d1);}).length;
+  const ttUnlogged=Math.max(0,ttw.length-ttLogged);
+  const tden=Math.max(ttw.length, done+gdone+ns);
+  out.training={v:tden>0?Math.min(done+gdone,tden)/tden:null, disp:`${done+gdone} done, ${ns} no-show, ${ttUnlogged} TT w/o asset`, avail:tden>0, done:done+gdone, ns, ttUnlogged, ttw:ttw.length};
+  // rubric
+  let rub=null; for(let i=s.ed.length-1;i>=0;i--){ const vals=Object.values(s.ed[i].rub||{}).filter(x=>x!=null); if(vals.length){rub=avg(vals);break;} }
+  out.edrubric={v:rub, disp:rub!=null?rub.toFixed(1)+' / 4':'not scored', avail:rub!=null};
+  // AM pace
+  const passed=set.amvMilestones.filter(m=>m<=set.asOf).length, cnt=A.length;
+  out.amcadence={v:(passed>0||cnt>0)?Math.min(1,cnt/Math.max(1,passed)):null, disp:`${cnt} visit${cnt===1?'':'s'}; ${passed} of ${set.amvAnnualTarget} milestones due`, avail:(passed>0||cnt>0), cnt, passed};
+  out._C=C; out._H=H;
+  return out;
+}
+function evalSchool(s,cfg){
+  const set=cfg.settings, KV=kpiValues(s,cfg); let earned=0, avail=0, total=0; const rows=[];
+  cfg.kpis.forEach(k=>{
+    if(!k.on) return;
+    const x=KV[k.id]; let w=k.w; if(k.id==='harvest') w=k.w*(x.rf??rampFrac(set));
+    total+=k.w;
+    let pts=null;
+    if(x.avail && x.v!=null){ pts = w*clamp((x.v-k.floor)/((k.target-k.floor)||1)); earned+=pts; avail+=w; }
+    rows.push({k, x, w, pts});
+  });
+  const score = avail>0 ? 100*earned/avail : null, conf = total? avail/total : 0;
+  const prov = conf*100 < set.minConfidence;
+  let grade='—'; if(score!=null){ const b=set.bands; grade = score>=b.A?'A':score>=b.B?'B':score>=b.C?'C':score>=b.D?'D':'F'; }
+  return {KV, rows, score, conf, prov, grade, C:KV._C, H:KV._H, stage:stageOf(s,set,KV._H)};
+}
+function alertsFor(s,E,cfg){
+  const set=cfg.settings, a=s.agg, out=[], asOf=set.asOf, K=E.KV;
+  const add=(rule,sev,title,detail,action,sig)=>out.push({rule,sev,title,detail,action,sig:sig||detail,code:s.code});
+  if(E.C.trail>=set.missedStreak) add('missed','high',`Missed ${E.C.trail} scheduled weeks in a row`, `Weeks of ${E.C.missed.slice(-E.C.trail).map(fmtD).join(', ')} have no GST asset.`, 'Confirm the school was visited; if so ask the GST to file the asset, otherwise check access/scheduling.', 'm'+E.C.trail+E.C.missed.slice(-1));
+  if(s.onSchedule && s.lastVisit && dayDiff(asOf,s.lastVisit)>=set.staleDays && E.C.trail<set.missedStreak) add('stale','med',`No GST visit logged in ${dayDiff(asOf,s.lastVisit)} days`,`Last visit ${fmtDY(s.lastVisit)}.`,'Check whether the schedule changed or the asset is late.', 's'+s.lastVisit);
+  Object.entries(a.offStreaks).forEach(([sys,n])=>{ if(n>=set.offlineStreak) add('offline','high',`${sys} not running on ${n} reports in a row`,`Reported down at every GST visit since ${fmtD(s.reports[Math.max(0,s.reports.length-n)]?.d)}.`,'Open a maintenance work order or escalate to the GST lead.', 'o'+sys+n); });
+  if(a.pestStreak>=2) add('pest','med',`Pests reported on ${a.pestStreak} visits in a row`,a.pestKinds.join(', '),'Review pest plan with GST; consider spot visit.', 'p'+a.pestStreak);
+  if(a.leakStreak>=2) add('leak','med',`Leaks reported on ${a.leakStreak} visits in a row`,'','Dispatch repair; confirm a fix date with the teacher.', 'l'+a.leakStreak);
+  const Hn=E.H.n;
+  if(Hn===0 && a.n>0){
+    if(asOf>=set.harvestDue) add('harvest','high','No harvest logged yet',`Harvest expected by ${fmtDY(set.harvestDue)}.`,'Agronomy check-in with GST and teacher; confirm crops/cycle.', 'h'+asOf.slice(0,7));
+    else if(asOf>=set.harvestWarn) add('harvest','med','No harvest logged yet',`Due by ${fmtDY(set.harvestDue)} (${dayDiff(set.harvestDue,asOf)} days).`,'Ask GST to confirm planting dates and estimate first harvest.', 'h'+asOf.slice(0,7));
+    else if(s.agg.nextHarvest && dayDiff(s.agg.nextHarvest,asOf)<-14) add('harvest','med','Estimated harvest date passed with no harvest logged',`GST estimated ${fmtDY(s.agg.nextHarvest)}.`,'Update the estimate or log the harvest (or its absence) on the next report.', 'hd'+s.agg.nextHarvest);
+    else add('harvest','upcoming','First harvest still ahead',`Needed by ${fmtDY(set.harvestDue)} · ${dayDiff(set.harvestDue,asOf)} days. ${s.agg.nextHarvest?'GST estimate: '+fmtDY(s.agg.nextHarvest):'No estimate on file.'}`,'No action yet; watch.', 'hu');
+  }
+  const T=K.training;
+  if(T.ns>0 && T.done===0) add('training','high',`Training no-show${T.ns>1?' ×'+T.ns:''} with no completed session`,'No completed curriculum session logged since the no-show.','Ed team to reschedule; AM to nudge the teacher/principal.', 'tn'+T.ns);
+  if(T.ttUnlogged>0) add('tt','med',`${T.ttUnlogged} scheduled training visit${T.ttUnlogged>1?'s':''} (TT) with no training asset`,'The schedule lists a TT visit but no Ed Team or GST training record follows.','Ask the GST/Ed team to log the training asset.', 'tt'+T.ttUnlogged);
+  const cnt=K.amcadence.cnt, pass=K.amcadence.passed, nextM=set.amvMilestones.find(m=>m>asOf);
+  if(cnt<pass) add('amv','med',`AM visit pace behind (${cnt} of ${pass} due)`,`Target ${set.amvAnnualTarget} visits per year; milestones ${set.amvMilestones.map(fmtD).join(' · ')}.`,'Schedule an Area Manager visit.', 'a'+cnt+pass);
+  else if(cnt===0 && nextM && dayDiff(nextM,asOf)<=45) add('amv','upcoming',`First AM visit due by ${fmtD(nextM)}`,`${dayDiff(nextM,asOf)} days away; no AM visit on file this year.`,'Put a visit on the calendar.', 'au'+nextM);
+  if(s.amv.length){ const l=s.amv[s.amv.length-1]; if(l.pconv==='No' && l.fu!=='Yes') add('principal','med','No principal/AP contact at last AM visit',`${fmtDY(l.d)}${l.fu==='No'?' · follow-up email not sent':''}.`,'Send a principal touchpoint or complete the Principal Relationship asset.', 'pr'+l.d);
+    if(l.curr==='No'||l.curr==='Has questions for ed team') add('curr','low','Curriculum use flagged at last AM visit',`"${l.curr}" on ${fmtDY(l.d)}.`,'Loop in the curriculum specialist.', 'cu'+l.d); }
+  const seq=(s.aff||[]).map(x=>x[1]); if(seq.length>=5){ const last=seq[seq.length-1]; let run=0; for(let i=seq.length-1;i>=0&&seq[i]===last;i--) run++; const prev=seq[seq.length-1-run];
+    if(run>=3 && prev && prev!==last && seq.filter(x=>x===prev).length>=2) add('contact','low','Possible teacher/contact change',`Reports used to list ${prev}; the last ${run} list ${last}. Verify and log it in notes.`,'Confirm the current teacher and update contacts (and note the change date).', 'c'+prev+last); }
+  return out;
+}
+let R={};
+function computeAll(cfg=activeCfg()){
+  const res={};
+  Object.values(DATA.schools).forEach(s0=>{
+    const s=schoolView(s0); if(s.excluded) return;
+    const E=evalSchool(s,cfg); const al=alertsFor(s,E,cfg);
+    res[s.code]={s,E,al};
+  });
+  return res;
+}
+function alertState(code,al){
+  const st=ST.alerts[code+'|'+al.rule]; if(!st) return 'open';
+  if(st.sig!==al.sig) return 'open';
+  if(st.status==='snoozed' && st.until && st.until<=activeCfg().settings.asOf) return 'open';
+  return st.status;
+}
+const SEV = {high:3,med:2,low:1,upcoming:0};
+const SEVL = {high:'Act now',med:'Soon',low:'Watch',upcoming:'Coming up'};
+function sevChip(s){ const c={high:'c-high',med:'c-med',low:'c-low',upcoming:'c-up'}[s]; return `<span class="chip ${c}">${SEVL[s]}</span>`; }
+const RULES = {missed:'Missed weekly assets',stale:'No recent visit',offline:'System not running',pest:'Pests',leak:'Leaks',harvest:'Harvest',training:'Training no-show',tt:'Training asset missing',amv:'AM visit pace',principal:'Principal contact',curr:'Curriculum use',contact:'Teacher change'};
+const gradeChip = (E) => E.score==null ? `<span class="grade gP">—</span>` : `<span class="grade ${E.prov?'gP':'g'+E.grade}" title="${E.prov?'Provisional: not enough data':'Grade '+E.grade}">${E.grade}</span>`;
+
+/* ===================== VIEWS ===================== */
+const TABS=[['today','Today'],['schools','Schools'],['queue','Action queue'],['ams','Area managers'],['rubric','Rubric'],['health','Data health']];
+function renderNav(){
+  const open=Object.values(R).reduce((n,r)=>n+r.al.filter(a=>a.sev==='high'&&alertState(r.s.code,a)==='open').length,0);
+  $('#nav').innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" class="${UI.tab===k?'on':''}">${l}${k==='queue'&&open?`<span class="badge">${open}</span>`:''}</button>`).join('');
+  $('#whoLbl').textContent=ST.user?`Editing as ${ST.user}`:'No name set';
+  $('#whoBtn').textContent=ST.user?'Change':'Set name';
+}
+function render(){ R=computeAll(); renderNav(); const m=$('#main');
+  ({today:vToday,schools:vSchools,queue:vQueue,ams:vAMs,rubric:vRubric,health:vHealth})[UI.tab](m);
+  if(UI.open) renderDrawer(UI.open);
+}
+function hero(m,h,p){ const set=activeCfg().settings; m.innerHTML=`<div class="hero"><h1>${h}</h1><p>${p}</p><span class="asof">Data through ${fmtDY(set.asOf)} · full weeks scored through ${fmtDY(set.evalThrough)}</span></div>`; }
+const allR = () => Object.values(R);
+function openAlerts(filter){ const out=[]; allR().forEach(r=>r.al.forEach(a=>{ const st=alertState(r.s.code,a); if(!filter||filter(a,st,r)) out.push({a,st,r}); })); return out; }
+
+function vToday(m){
+  hero(m,'Keep every <em>partner school</em> growing','Immediate read on your schools: who needs a call, who is thriving, and what is coming due. Grades re-score live from the rubric you can edit; notes and snoozes save in this browser.');
+  const rs=allR(), scored=rs.filter(r=>r.E.score!=null), set=activeCfg().settings;
+  const act=openAlerts((a,st)=>st==='open'&&a.sev==='high'), actSchools=new Set(act.map(x=>x.r.s.code)).size;
+  const comp=rs.map(r=>r.E.C).filter(c=>c.den); const tOk=comp.reduce((a,c)=>a+c.ok,0), tDen=comp.reduce((a,c)=>a+c.den,0);
+  const noH=rs.filter(r=>r.E.H.n===0&&r.s.agg.n>0).length, withH=rs.filter(r=>r.E.H.n>0).length;
+  const amvDone=rs.filter(r=>r.s.amv.length>0).length;
+  const grades=['A','B','C','D','F'].map(g=>[g,scored.filter(r=>!r.E.prov&&r.E.grade===g).length]); const prov=scored.filter(r=>r.E.prov).length;
+  const bands=set.bands;
+  m.insertAdjacentHTML('beforeend',`<div class="grid g4">
+   <div class="card tile red click" data-go="queue"><div class="lab">Need action now</div><div class="big">${actSchools}</div><div class="sub">schools with an open "act now" alert</div></div>
+   <div class="card tile"><div class="lab">Avg score (all with data)</div><div class="big">${scored.length?Math.round(avg(scored.map(r=>r.E.score))):'—'}</div><div class="sub">${scored.length} schools scored · ${prov} provisional</div></div>
+   <div class="card tile"><div class="lab">Weekly assets completed</div><div class="big">${tDen?pct(tOk/tDen):'—'}</div><div class="sub">${tOk} of ${tDen} scheduled school-weeks (cadence- &amp; grace-adjusted)</div></div>
+   <div class="card tile yel click" data-go="schools" data-flag="noharvest"><div class="lab">Harvest status</div><div class="big">${withH} <span style="font-size:15px;color:var(--mute)">harvested</span></div><div class="sub">${noH} still need a first harvest by ${fmtD(set.harvestDue)} (${dayDiff(set.harvestDue,set.asOf)} days)</div></div>
+   <div class="card tile org"><div class="lab">Area manager visits</div><div class="big">${amvDone}<span style="font-size:15px;color:var(--mute)"> / ${rs.length}</span></div><div class="sub">schools visited at least once this year (target ${set.amvAnnualTarget}/yr)</div></div>
+  </div>`);
+  m.insertAdjacentHTML('beforeend',`<div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Grade mix <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:400">A ≥${bands.A} · B ≥${bands.B} · C ≥${bands.C} · D ≥${bands.D}</span></h3>
+    ${grades.map(([g,n])=>`<div style="display:flex;align-items:center;gap:10px;margin:5px 0"><span class="grade g${g}">${g}</span><div class="bar" style="flex:1;height:12px"><i style="width:${scored.length?n/scored.length*100:0}%"></i></div><b style="width:34px;text-align:right">${n}</b></div>`).join('')}
+    <div style="display:flex;align-items:center;gap:10px;margin:5px 0"><span class="grade gP">…</span><div class="bar" style="flex:1;height:12px"><i style="width:${scored.length?prov/scored.length*100:0}%;background:#C9CCC8"></i></div><b style="width:34px;text-align:right">${prov}</b></div>
+    <div class="src">Provisional = less than ${set.minConfidence}% of the rubric's points have data yet (e.g., no AM visit, no ed-team session). They are scored on what exists, never penalized for what has not happened.</div></div>
+   <div class="card"><h3>Open alerts by type</h3>${(()=>{const c={};openAlerts((a,st)=>st==='open'&&a.sev!=='upcoming').forEach(x=>{c[x.a.rule]=c[x.a.rule]||{n:0,s:x.a.sev};c[x.a.rule].n++; if(SEV[x.a.sev]>SEV[c[x.a.rule].s])c[x.a.rule].s=x.a.sev;});
+     return Object.entries(c).sort((a,b)=>SEV[b[1].s]-SEV[a[1].s]||b[1].n-a[1].n).map(([r,v])=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid #F0F2EC"><span>${RULES[r]}</span><span>${sevChip(v.s)} <b>${v.n}</b></span></div>`).join('')||'<span class="muted">Nothing open.</span>';})()}<div class="src" style="margin-top:8px">Plus ${openAlerts((a,st)=>st==='open'&&a.sev==='upcoming').length} “coming up” items (first harvest, first AM visit) shown only in the Action queue.</div></div>
+  </div>`);
+  const top=act.sort((x,y)=>x.r.E.score-y.r.E.score).slice(0,10);
+  m.insertAdjacentHTML('beforeend',`<div class="sec"><h2>Do these <em>first</em></h2><span>Top open "act now" alerts · <a href="#" data-go="queue">see full action queue</a></span></div>${top.map(x=>alertRow(x)).join('')||'<div class="callout g">No "act now" alerts open. Nice.</div>'}`);
+}
+function alertRow({a,st,r},compact){
+  const s=r.s, state=st==='open'?'':`<span class="chip c-n">${st}</span>`;
+  return `<div class="al ${a.sev} ${st!=='open'?'done':''}"><div>${sevChip(a.sev)}</div><div class="t">${compact?'':`<b><a href="#" data-open="${s.code}">${esc(s.code)} ${esc(s.name)}</a></b> <span class="muted">· ${esc(s.amEff)}${s.gst?' · GST '+esc(s.gst):''}</span> `}${state}${compact?'':'<br>'}<b>${esc(a.title)}</b><div class="muted" style="font-size:12px">${esc(a.detail)}</div><div class="act">→ ${esc(a.action)}</div></div>
+   <div class="btns">${st==='open'?`<button class="btn s o" data-al="ack" data-c="${s.code}" data-r="${a.rule}">Acknowledge</button><button class="btn s d" data-al="snooze" data-c="${s.code}" data-r="${a.rule}">Snooze 2 wks</button><button class="btn s d" data-al="resolved" data-c="${s.code}" data-r="${a.rule}">Resolve</button>`:`<button class="btn s d" data-al="reopen" data-c="${s.code}" data-r="${a.rule}">Reopen</button>`}${compact?'':`<button class="btn s d" data-open="${s.code}">Notes</button>`}</div></div>`;
+}
+
+function filteredSchools(){
+  let L=allR();
+  const q=UI.q.trim().toLowerCase();
+  if(q) L=L.filter(r=>(r.s.code+' '+r.s.name+' '+r.s.amEff+' '+(r.s.gst||'')+' '+(r.s.borough||'')).toLowerCase().includes(q));
+  if(UI.am) L=L.filter(r=>r.s.amEff===UI.am);
+  if(UI.gst) L=L.filter(r=>r.s.gst===UI.gst);
+  if(UI.boro) L=L.filter(r=>r.s.borough===UI.boro);
+  if(UI.grade) L=L.filter(r=>UI.grade==='prov'?r.E.prov:(!r.E.prov&&r.E.grade===UI.grade));
+  if(UI.stage) L=L.filter(r=>r.E.stage.label===UI.stage);
+  if(UI.flag==='noharvest') L=L.filter(r=>r.E.H.n===0&&r.s.agg.n>0);
+  if(UI.flag==='alerts') L=L.filter(r=>r.al.some(a=>a.sev!=='upcoming'&&alertState(r.s.code,a)==='open'));
+  if(UI.flag==='notes') L=L.filter(r=>(ST.notes[r.s.code]||[]).length);
+  const key={score:r=>r.E.score??-1,name:r=>r.s.name.toLowerCase(),am:r=>r.s.amEff,gst:r=>r.s.gst||'',comp:r=>r.E.C.rate??-1,last:r=>r.s.lastVisit||'',alerts:r=>r.al.filter(a=>a.sev!=='upcoming'&&alertState(r.s.code,a)==='open').reduce((n,a)=>n+SEV[a.sev]*10+1,0),conf:r=>r.E.conf,stage:r=>r.E.stage.i,harv:r=>r.E.H.n}[UI.sort]||(r=>r.E.score);
+  L.sort((a,b)=>{const x=key(a),y=key(b); return (x<y?-1:x>y?1:0)*UI.dir;});
+  return L;
+}
+const uniq = (arr) => [...new Set(arr.filter(Boolean))].sort();
+function vSchools(m){
+  hero(m,'Every <em>school</em>, at a glance','Click a school for its full profile, score breakdown, growth stage and notes. Click a column to sort.');
+  const rs=allR();
+  const sel=(id,label,opts,val)=>`<select data-f="${id}"><option value="">${label}</option>${opts.map(o=>`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+  m.insertAdjacentHTML('beforeend',`<div class="tools"><input type="search" id="q" placeholder="Search school, code, AM, GST…" value="${esc(UI.q)}">
+   ${sel('am','All area managers',uniq(rs.map(r=>r.s.amEff)),UI.am)}${sel('gst','All GSTs',uniq(rs.map(r=>r.s.gst)),UI.gst)}${sel('boro','All boroughs',uniq(rs.map(r=>r.s.borough)),UI.boro)}
+   <select data-f="grade"><option value="">All grades</option>${['A','B','C','D','F'].map(g=>`<option ${UI.grade===g?'selected':''}>${g}</option>`).join('')}<option value="prov" ${UI.grade==='prov'?'selected':''}>Provisional</option></select>
+   ${sel('stage','Any growth stage',uniq(rs.map(r=>r.E.stage.label)),UI.stage)}
+   <select data-f="flag"><option value="">Everything</option><option value="alerts" ${UI.flag==='alerts'?'selected':''}>Has open alerts</option><option value="noharvest" ${UI.flag==='noharvest'?'selected':''}>No harvest yet</option><option value="notes" ${UI.flag==='notes'?'selected':''}>Has notes</option></select>
+   <button class="btn s d" id="clr">Clear</button><button class="btn s o" id="csv">Export CSV</button></div><div id="tblwrap"></div>`);
+  drawTable();
+}
+function drawTable(){
+  const L=filteredSchools(), PS=50, pg=Math.min(UI.page,Math.max(0,Math.ceil(L.length/PS)-1)); UI.page=pg;
+  const th=(k,l,ns)=>`<th ${ns?'class="ns"':`data-sort="${k}"`}>${l}${UI.sort===k?(UI.dir>0?' ▲':' ▼'):''}</th>`;
+  const rows=L.slice(pg*PS,pg*PS+PS).map(r=>{
+    const s=r.s,E=r.E, al=r.al.filter(a=>a.sev!=='upcoming'&&alertState(s.code,a)==='open'), top=al.sort((a,b)=>SEV[b.sev]-SEV[a.sev])[0], nn=(ST.notes[s.code]||[]).length;
+    const cr=E.C.rate; const cc=cr==null?'':cr>=.9?'':cr>=.7?'y':'r';
+    return `<tr class="row" data-open="${s.code}"><td class="nm"><b>${esc(s.name)}</b><small>${esc(s.code)} · ${esc(s.borough||'')}${s.cadence&&s.cadence!=='Weekly'?' · '+s.cadence:''}</small></td>
+     <td>${esc(s.amEff)}${s.amOv?' <span class="chip c-n" title="manual assignment">edited</span>':''}</td><td>${esc(s.gst||'—')}</td>
+     <td>${gradeChip(E)} <b>${E.score!=null?Math.round(E.score):''}</b></td><td><div class="bar ${E.conf<.5?'y':''}" title="${Math.round(E.conf*100)}% of rubric points have data"><i style="width:${E.conf*100}%"></i></div></td>
+     <td style="min-width:90px"><div class="bar ${cc}"><i style="width:${(cr||0)*100}%"></i></div><small class="muted">${cr==null?'n/a':pct(cr)}</small></td>
+     <td>${s.lastVisit?fmtD(s.lastVisit):'—'}</td><td>${E.stage.warn?`<span class="chip c-med">${E.stage.label}</span>`:`<span class="chip ${E.stage.i>=3?'c-ok':E.stage.i<0?'c-n':'c-low'}">${E.stage.label}</span>`}</td>
+     <td>${al.length?`${sevChip(top.sev)} <span class="muted">${al.length}</span>`:'<span class="muted">—</span>'}</td><td>${nn?`<span class="chip c-n">${nn} note${nn>1?'s':''}</span>`:''}</td></tr>`;}).join('');
+  $('#tblwrap').innerHTML=`<table class="tbl"><thead><tr>${th('name','School')}${th('am','Area mgr')}${th('gst','GST')}${th('score','Score')}${th('conf','Data')}${th('comp','Assets')}${th('last','Last visit')}${th('stage','Growth')}${th('alerts','Alerts')}${th('n','Notes',1)}</tr></thead><tbody>${rows||'<tr><td colspan="10" class="muted" style="padding:20px">No schools match.</td></tr>'}</tbody></table>
+  <div class="pager"><span>${L.length} schools</span><span>${pg>0?'<button class="btn s d" data-pg="-1">‹ Prev</button> ':''}Page ${pg+1} of ${Math.max(1,Math.ceil(L.length/PS))} ${(pg+1)*PS<L.length?'<button class="btn s d" data-pg="1">Next ›</button>':''}</span></div>`;
+}
+
+function vQueue(m){
+  hero(m,'Action <em>queue</em>','Every alert that needs a human. Acknowledge, snooze or resolve with one click; an alert reopens by itself if the problem gets worse or recurs.');
+  const rs=allR(), q=UI.aq;
+  const opts=(arr,val)=>arr.map(o=>`<option value="${esc(o)}" ${o===val?'selected':''}>${esc(o)}</option>`).join('');
+  m.insertAdjacentHTML('beforeend',`<div class="tools"><select data-aq="am"><option value="">All area managers</option>${opts(uniq(rs.map(r=>r.s.amEff)),q.am)}</select>
+   <select data-aq="rule"><option value="">All alert types</option>${Object.entries(RULES).map(([k,v])=>`<option value="${k}" ${q.rule===k?'selected':''}>${v}</option>`).join('')}</select>
+   <select data-aq="sev"><option value="">All priorities</option>${Object.entries(SEVL).map(([k,v])=>`<option value="${k}" ${q.sev===k?'selected':''}>${v}</option>`).join('')}</select>
+   <select data-aq="st">${['open','acknowledged','snoozed','resolved','all'].map(s=>`<option ${q.st===s?'selected':''}>${s}</option>`).join('')}</select>
+   <button class="btn s g" id="digest">Email digest for this AM</button></div><div id="aqlist"></div>`);
+  drawQueue();
+}
+function queueItems(){ const q=UI.aq;
+  return openAlerts((a,st,r)=>(!q.am||r.s.amEff===q.am)&&(!q.rule||a.rule===q.rule)&&(!q.sev||a.sev===q.sev)&&(q.st==='all'||st===q.st||(q.st==='acknowledged'&&st==='ack')))
+   .sort((x,y)=>SEV[y.a.sev]-SEV[x.a.sev]||x.r.s.amEff.localeCompare(y.r.s.amEff)||x.r.s.name.localeCompare(y.r.s.name)); }
+function drawQueue(){ const L=queueItems(); $('#aqlist').innerHTML=`<div class="src" style="margin-bottom:8px">${L.length} alerts</div>`+(L.slice(0,150).map(alertRow).join('')||'<div class="callout g">Nothing here.</div>')+(L.length>150?`<div class="src">Showing first 150 — filter to narrow.</div>`:''); }
+function digestText(am){
+  const items=queueItems().filter(x=>x.st==='open'&&x.a.sev!=='upcoming'&&x.a.sev!=='low'&&(!am||x.r.s.amEff===am));
+  const lines=items.slice(0,25).map(x=>`• ${x.r.s.code} ${x.r.s.name}: ${x.a.title}. ${x.a.action}`);
+  return {n:items.length, subject:`Partner schools needing action${am?' — '+am:''} (${items.length})`, body:`Hi${am&&am!=='Unassigned'?' '+am:''},\n\nThese partner schools need your attention as of ${fmtDY(activeCfg().settings.asOf)}:\n\n${lines.join('\n')}${items.length>25?`\n…and ${items.length-25} more in the dashboard.`:''}\n\nOpen the dashboard action queue for details and to log notes.\n`};
+}
+
+function vAMs(m){
+  hero(m,'Area <em>managers</em>','Portfolio view for each area manager. Schools shown are the ones their assets are filed under; fix a wrong assignment from the school profile.');
+  const rs=allR(), set=activeCfg().settings, by={};
+  rs.forEach(r=>{(by[r.s.amEff]=by[r.s.amEff]||[]).push(r);});
+  const rows=Object.entries(by).sort((a,b)=>a[0].localeCompare(b[0])).map(([am,L])=>{
+    const sc=L.filter(r=>r.E.score!=null), comp=L.map(r=>r.E.C).filter(c=>c.den), tOk=comp.reduce((a,c)=>a+c.ok,0), tDen=comp.reduce((a,c)=>a+c.den,0);
+    const hi=L.reduce((n,r)=>n+r.al.filter(a=>a.sev==='high'&&alertState(r.s.code,a)==='open').length,0);
+    const med=L.reduce((n,r)=>n+r.al.filter(a=>a.sev==='med'&&alertState(r.s.code,a)==='open').length,0);
+    const v1=L.filter(r=>r.s.amv.length>=1).length, passed=set.amvMilestones.filter(x=>x<=set.asOf).length;
+    const behind=L.filter(r=>r.s.amv.length<passed).length;
+    return `<tr><td><b style="color:var(--ink)">${esc(am)}</b></td><td>${L.length}</td><td>${sc.length?Math.round(avg(sc.map(r=>r.E.score))):'—'}</td><td>${tDen?pct(tOk/tDen):'—'}</td><td>${hi?`<span class="chip c-high">${hi}</span>`:'0'}</td><td>${med?`<span class="chip c-med">${med}</span>`:'0'}</td><td>${v1} / ${L.length}</td><td>${L.filter(r=>r.E.H.n===0&&r.s.agg.n>0).length}</td><td><button class="btn s d" data-amq="${esc(am)}">Queue</button> <button class="btn s o" data-dig="${esc(am)}">Digest</button></td></tr>`;}).join('');
+  m.insertAdjacentHTML('beforeend',`<table class="tbl"><thead><tr><th class="ns">Area manager</th><th class="ns">Schools</th><th class="ns">Avg score</th><th class="ns">Assets on time</th><th class="ns">Act now</th><th class="ns">Soon</th><th class="ns">AM visited ≥1×</th><th class="ns">No harvest yet</th><th class="ns"></th></tr></thead><tbody>${rows}</tbody></table>
+  <div class="src" style="margin-top:8px">“Digest” opens a pre-filled email in your mail app (email auto-sending is a future build — see Data health → Roadmap).</div>`);
+}
+
+/* ---------- Rubric editor ---------- */
+function vRubric(m){
+  hero(m,'Rubric <em>editor</em>','Change categories, weights, floors and targets. Points must total 100 before you can save. Every save is a new version with who/why, and you can preview how it would move grades first.');
+  const act=activeCfg(); if(!UI.draft) UI.draft=clone(act);
+  const D=UI.draft, tot=D.kpis.filter(k=>k.on).reduce((a,k)=>a+(+k.w||0),0), ok=Math.abs(tot-100)<1e-6;
+  const grpTot=g=>D.kpis.filter(k=>k.g===g&&k.on).reduce((a,k)=>a+(+k.w||0),0);
+  const dirty=JSON.stringify(D)!==JSON.stringify(act);
+  let impact=''; if(dirty){ const Rn=computeAll(D); const a=[],b=[]; let moved=0,chg=0; Object.keys(Rn).forEach(c=>{ const x=R[c], y=Rn[c]; if(x&&x.E.score!=null&&y.E.score!=null){ a.push(x.E.score); b.push(y.E.score); chg+=y.E.score-x.E.score; if(x.E.grade!==y.E.grade) moved++; }});
+    impact=`<div class="callout"><b>Preview of this draft:</b> average score ${Math.round(avg(a))} → ${Math.round(avg(b))} (${chg/a.length>=0?'+':''}${(chg/a.length).toFixed(1)}); ${moved} of ${a.length} schools change letter grade.</div>`; }
+  const rowFor=k=>`<tr><td><input type="checkbox" data-k="${k.id}" data-p="on" ${k.on?'checked':''}></td><td><b style="color:var(--ink)">${esc(k.label)}</b><div class="src">${esc(k.src)} — ${esc(k.hint)}</div></td><td><input class="num" type="number" step="1" min="0" data-k="${k.id}" data-p="w" value="${k.w}"></td><td><input class="num" type="number" step="${k.unit==='%'?.05:.1}" data-k="${k.id}" data-p="floor" value="${k.floor}"></td><td><input class="num" type="number" step="${k.unit==='%'?.05:.1}" data-k="${k.id}" data-p="target" value="${k.target}"></td><td class="muted">${esc(k.unit==='%'?'0–1 = %':k.unit)}</td></tr>`;
+  const S=D.settings, f=(id,label,val,type='number',step='1')=>`<label class="f" style="gap:2px"><small class="muted" style="font-weight:700;text-transform:uppercase;font-size:10.5px">${label}</small><input data-s="${id}" type="${type}" step="${step}" value="${esc(val)}"></label>`;
+  m.insertAdjacentHTML('beforeend',`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><span class="tot ${ok?'good':'bad'}">${tot} / 100 pts</span> <span class="chip ${ok?'c-ok':'c-high'}">${ok?'Total is 100 ✓':(tot>100?`${tot-100} over`:`${100-tot} short`)}</span></div>
+   <div><button class="btn s d" id="rbal">Auto-balance to 100</button> <button class="btn s d" id="rrev" ${dirty?'':'disabled'}>Discard changes</button></div></div>
+   <p class="src">Score = points earned ÷ points that have data, ×100. A school with no AM visit yet is scored on GST/Ed data only (shown as lower "Data" confidence) rather than penalized. Floor = 0 points, Target = full points, linear in between.</p>
+   <table class="tbl ktbl"><thead><tr><th class="ns">On</th><th class="ns">Measure</th><th class="ns">Points</th><th class="ns">Floor</th><th class="ns">Target</th><th class="ns">Unit</th></tr></thead><tbody>
+   ${Object.keys(GROUPS).map(g=>`<tr><td colspan="6" style="background:var(--green-xl);font-weight:800;color:var(--green-dd)">${GROUPS[g]} <span class="muted">— ${grpTot(g)} pts</span></td></tr>`+D.kpis.filter(k=>k.g===g).map(rowFor).join('')).join('')}</tbody></table></div>
+   <div class="card" style="margin-top:14px"><h3>Timing &amp; thresholds</h3><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+   ${f('asOf','As-of date',S.asOf,'date')}${f('evalThrough','Score full weeks through',S.evalThrough,'date')}${f('graceWeeks','Make-up grace (weeks)',S.graceWeeks)}${f('minConfidence','Min data to show a grade (%)',S.minConfidence)}
+   ${f('harvestRampStart','Harvest points start',S.harvestRampStart,'date')}${f('harvestRampEnd','Harvest points full weight',S.harvestRampEnd,'date')}${f('harvestWarn','Harvest alert: soon',S.harvestWarn,'date')}${f('harvestDue','Harvest alert: act now',S.harvestDue,'date')}
+   ${f('amvAnnualTarget','AM visits per year',S.amvAnnualTarget)}${f('staleDays','Stale visit (days)',S.staleDays)}${f('missedStreak','Missed-week streak to flag',S.missedStreak)}${f('offlineStreak','System-down streak to flag',S.offlineStreak)}
+   ${f('bA','Grade A ≥',S.bands.A)}${f('bB','Grade B ≥',S.bands.B)}${f('bC','Grade C ≥',S.bands.C)}${f('bD','Grade D ≥',S.bands.D)}
+   <label class="f" style="gap:2px"><small class="muted" style="font-weight:700;text-transform:uppercase;font-size:10.5px">Cadence-aware assets</small><select data-s="cadenceAware"><option value="1" ${S.cadenceAware?'selected':''}>Yes (EOW/monthly)</option><option value="0" ${!S.cadenceAware?'selected':''}>No</option></select></label></div></div>
+   ${impact}
+   <div class="card f" style="margin-top:14px"><h3>Save as new version</h3><div class="row"><input id="rnote" style="flex:1;min-width:260px" placeholder="Why this change? (required — e.g., 'Harvest phase-in per Erin 11/09')"><button class="btn g" id="rsave" ${ok&&dirty?'':'disabled'}>Save version ${ST.rubrics.length+1}</button></div></div>
+   <div class="sec"><h2>Version <em>history</em></h2><span>${ST.rubrics.length} version${ST.rubrics.length>1?'s':''}</span></div>
+   ${ST.rubrics.slice().reverse().map((v,i)=>`<div class="note ${i===0?'pin':''}"><div class="m"><b>v${v.v}</b> ${i===0?'<span class="chip c-ok">active</span>':''}<span>${new Date(v.ts).toLocaleString()}</span><span>by ${esc(v.by||'unknown')}</span><span style="margin-left:auto"><button class="btn s d" data-rest="${v.v}">Load as draft</button></span></div><p>${esc(v.note)}</p>${i<ST.rubrics.length-1?`<div class="src">Weights: ${v.cfg.kpis.map(k=>k.id+' '+(k.on?k.w:'off')).join(' · ')}</div>`:''}</div>`).join('')}`);
+}
+function draftSet(id,val){ const S=UI.draft.settings; if(id[0]==='b'&&id.length===2) S.bands[id[1]]=+val; else if(id==='cadenceAware') S.cadenceAware=val==='1'; else S[id]=(typeof S[id]==='number')?+val:val; }
+
+/* ---------- Data health ---------- */
+function vHealth(m){
+  hero(m,'Data <em>health</em> &amp; limits','What this dashboard can and cannot tell you from the files uploaded, and the clean-up that would improve it.');
+  const d=DATA.diag, rs=allR(), rec=d.reconcile, ks=Object.keys(rec).sort();
+  const noAM=rs.filter(r=>r.s.amEff==='Unassigned'), nonSchool=rs.filter(r=>!r.s.isSchool);
+  const rt=ks.map(k=>`<tr><td>${fmtD(k)}</td><td>${rec[k].manual_missing}</td><td><b>${rec[k].manual_missing_but_logged}</b></td><td>${rec[k].manual_missing_cadence_tagged}</td><td>${rec[k].scheduled}</td><td>${rec[k].logged}</td><td>${pct(rec[k].logged/rec[k].scheduled)}</td></tr>`).join('');
+  m.insertAdjacentHTML('beforeend',`<div class="grid g4">
+  <div class="card tile org"><div class="lab">Hand-built "missing" lists already in Accelo</div><div class="big">${ks.reduce((a,k)=>a+rec[k].manual_missing_but_logged,0)}</div><div class="sub">of ${ks.reduce((a,k)=>a+rec[k].manual_missing,0)} school-weeks listed as missing actually have an asset logged that week</div></div>
+  <div class="card tile yel"><div class="lab">Assets with no visit date</div><div class="big">${d.gst_missing_visit_date}</div><div class="sub">dates recovered from titles; ${d.gst_unrecoverable_date} unrecoverable</div></div>
+  <div class="card tile"><div class="lab">Duplicate school-days removed</div><div class="big">${d.gst_duplicate_school_days}</div><div class="sub">same school logged twice on one day</div></div>
+  <div class="card tile red"><div class="lab">Schools with no area manager</div><div class="big">${noAM.length}</div><div class="sub">out-of-state, non-school or unassigned partners</div></div></div>
+  <div class="sec"><h2>Missing-asset sheet vs <em>live data</em></h2><span>Why the weekly list overstates misses</span></div>
+  <div class="card"><table class="mini"><thead><tr><th>Week of</th><th>Listed missing (sheet)</th><th>…but logged in export</th><th>Of those, EOW/monthly</th><th>Scheduled</th><th>Logged</th><th>Rate</th></tr></thead><tbody>${rt}</tbody></table>
+  <p class="src">Sheets are point-in-time snapshots: they are not refreshed when an asset is filed late, and they list every-other-week/monthly schools as missing on their off week. This dashboard recomputes from the Accelo export and the schedule instead, with a make-up grace window and cadence awareness (both editable in Rubric).</p></div>
+  <div class="sec"><h2>Limitations <em>to know</em></h2><span>Read before trusting a grade</span></div>
+  <div class="card"><ul class="lim" style="margin:0;padding-left:18px">
+   <li><b>Only 9 weeks of data.</b> No trend lines or year-over-year comparisons are possible yet. Use “Backup” and the snapshots in notes to start your own history; a persistent database is needed for real trends.</li>
+   <li><b>Harvest data is thin and messy.</b> Only ${rs.filter(r=>r.E.H.n>0).length} schools have a harvest logged; weights are free text (“13 oz”, “2078 gr”, “~20”, bare “10”), so pounds are converted when a unit exists and bare numbers are marked ambiguous. Harvest points phase in Nov 1 → Jan 15 so an early blank doesn't tank a grade.</li>
+   <li><b>The export has no “submitted on” date.</b> A truly <i>late</i> asset can't be told from an on-time one; “late” here means a make-up visit in a following week. A Created/Submitted timestamp from Accelo would fix this.</li>
+   <li><b>The weekly schedule is a template, not a record of visits.</b> It is a human-readable grid: codes are extracted by pattern, “@” pairs are treated as one visit, and entries like “SBH”, “Lincoln”, “Roaring Brook” rely on name matching. Cadence (EOW/monthly) is inferred from notes typed in the cells and is inconsistent week to week.</li>
+   <li><b>The current week is incomplete.</b> The Nov 2–6 week had ~36 assets when exported (vs ~250 normally), so it is excluded from scoring (“full weeks through” date).</li>
+   <li><b>Area manager assignment comes from the asset files.</b> ${noAM.length} schools have no AM; ${nonSchool.length} partners are not NYC DBN schools (NJ/AL/Westchester/community orgs like UPROSE). Use “Edit assignment / hide from list” in a school's profile; changes are local until the roster is fixed in Accelo.</li>
+   <li><b>Not in the upload, so not scored:</b> teacher survey, HC performance, maintenance agreements, thank-you/support letters, events, photo timestamps, billable-hour logs, the scheduling-sheet “lab available” column (V). The rubric is rebuilt around what <i>is</i> available.</li>
+   <li><b>Teacher/principal turnover</b> can only be hinted at from the “Affiliation” contact on asset reports (it flips between people at many schools, so only a sustained switch is flagged) and “teachers trained” names, over 9 weeks of data. Log changes in school notes (type: Teacher change / Principal change) to build the history.</li>
+   <li><b>“Systems not running” is self-reported</b> by GSTs and the same list is often copy-pasted visit to visit, so a long streak may be stale reporting rather than a still-broken system. Alerts say “reported”, not “confirmed”.</li>
+   <li><b>No login yet.</b> Notes and snoozes save in <i>this browser</i> with the name you set, not on a server. Use Backup to export/import. A shared database + login is on the roadmap.</li></ul></div>
+  <div class="sec"><h2>Schools to <em>clean up</em></h2><span>${noAM.length} without an AM</span></div>
+  <div class="card"><div style="columns:2;font-size:12.5px">${noAM.map(r=>`<div><a href="#" data-open="${r.s.code}">${esc(r.s.full)}</a></div>`).join('')}</div></div>
+  <div class="sec"><h2>On the <em>roadmap</em></h2><span>From the Nov area-manager meeting</span></div>
+  <div class="card"><div class="grid g2" style="gap:10px"><div><b>Built here</b><ul class="lim"><li>Action queue with acknowledge / snooze / resolve</li><li>Email digest per AM (opens your mail app)</li><li>Editable rubric with version history &amp; 100-point check</li><li>Harvest phase-in, cadence-aware and grace-window asset scoring</li><li>Growth stage per lab; GST visit day</li><li>Editable notes, AM reassignment, teacher/principal change log</li></ul></div>
+  <div><b>Needs a server / more data</b><ul class="lim"><li>Real login, roles and an audit trail of who edited what</li><li>Automatic email alerts (needs a mail service)</li><li>Photo-timestamp check (needs Drive metadata)</li><li>Principal Engagement rubric / Principal Relationship asset in Accelo</li><li>Teacher &amp; principal turnover history (needs a contacts table)</li><li>Asset created-date, billable hours at asset entry</li></ul></div></div></div>`);
+}
+
+/* ---------- School drawer ---------- */
+function renderDrawer(code){
+  const r=R[code]; if(!r){UI.open=null;$('#ovl').innerHTML='';return;}
+  const s=r.s,E=r.E,set=activeCfg().settings, notes=ST.notes[code]||[];
+  const stageNames=['Not planted','Seedlings','Growing','Harvest soon','Harvesting'];
+  const als=r.al.filter(a=>a.sev!=='upcoming'||true).sort((a,b)=>SEV[b.sev]-SEV[a.sev]);
+  const wk=E.C.cells.map(c=>`<div class="${c.st}" title="${c.st==='ok'?'Asset logged':c.st==='late'?'Make-up visit':c.st==='miss'?'Scheduled, no asset':c.st==='exc'?'Off-cycle week (EOW/monthly)':'Not scheduled'}">${fmtD(c.w)}</div>`).join('');
+  const kt=E.rows.map(x=>`<tr><td>${esc(x.k.label)}<div class="src">${esc(x.k.src)}</div></td><td>${esc(x.x.disp)}</td><td class="right">${x.pts==null?'<span class="muted">no data</span>':x.pts.toFixed(1)+' / '+x.w.toFixed(1)}</td><td style="width:90px"><div class="bar ${x.pts==null?'':x.pts/x.w>=.75?'':x.pts/x.w>=.45?'y':'r'}"><i style="width:${x.pts==null?0:x.pts/x.w*100}%"></i></div></td></tr>`).join('');
+  const H=s.harvest.slice().sort((a,b)=>a.d<b.d?1:-1).map(h=>`<tr><td>${fmtD(h.d)}</td><td>${esc(h.crops||'')}</td><td>${esc(h.raw||'—')}${h.lb!=null?` <span class="muted">= ${h.lb} lb${h.amb?' (unit assumed)':''}</span>`:''}</td></tr>`).join('');
+  const reps=s.reports.slice().reverse().map(x=>`<tr><td>${fmtD(x.d)}</td><td>${esc(x.gst||'')}</td><td>${x.off.length?`<span class="chip c-high">down: ${esc(x.off.join(', '))}</span>`:'<span class="chip c-ok">all running</span>'} ${x.leak?'<span class="chip c-med">leak</span>':''} ${x.pest?`<span class="chip c-med">${esc(x.pest)}</span>`:''}</td><td>${esc(x.seed||'')}</td><td>${esc(x.conv||'')}</td><td>${esc(x.note||'')}</td></tr>`).join('');
+  const amv=s.amv.slice().reverse().map(x=>`<tr><td>${fmtD(x.d)}</td><td>${esc(x.am||'')}</td><td>${esc(x.pconv||'')}${x.fu?` <span class="muted">(email: ${esc(x.fu)})</span>`:''}</td><td>${esc(x.tconv||'')}</td><td>${esc(x.curr||'')}</td><td>${[x.imp,x.inv,x.clean].map(v=>v??'–').join(' / ')}</td><td>${esc(x.note||'')}</td></tr>`).join('');
+  const ed=s.ed.slice().reverse().map(x=>`<tr><td>${fmtD(x.d)}</td><td>${esc(x.sess||'—')}${x.ns?' <span class="chip c-high">no-show</span>':''}</td><td>${esc(x.spec||'')}</td><td>${esc(x.teachers||'')}</td><td>${Object.values(x.rub||{}).some(v=>v!=null)?Object.values(x.rub).map(v=>v??'–').join('/'):''}</td><td>${esc(x.note||'')}</td></tr>`).join('');
+  const nt=notes.slice().sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)||b.ts.localeCompare(a.ts)).map(n=>`<div class="note ${n.pin?'pin':''}"><div class="m"><span class="chip c-n">${esc(n.type)}</span><b>${esc(n.by||'Unknown')}</b><span>${new Date(n.ts).toLocaleString()}</span>${n.due?`<span class="chip c-low">follow up ${fmtD(n.due)}</span>`:''}<span style="margin-left:auto"><button class="btn s d" data-npin="${n.id}">${n.pin?'Unpin':'Pin'}</button> <button class="btn s d" data-ndel="${n.id}">Delete</button></span></div><p>${esc(n.text)}</p></div>`).join('');
+  const cr=E.C;
+  $('#ovl').innerHTML=`<div class="ov" data-close="1"></div><aside class="drawer"><div class="dh"><div style="flex:1"><div class="src">${esc(s.code)} · ${esc(s.borough||'')} · ${esc(s.span||'')} · ${esc(s.programYear||'')}</div><h2>${esc(s.name)}</h2><div style="margin-top:6px">${gradeChip(E)} <b style="font-size:18px;color:var(--ink)">${E.score!=null?Math.round(E.score):'—'}</b><span class="muted"> / 100 · ${Math.round(E.conf*100)}% of rubric has data${E.prov?' · <b>provisional</b>':''}</span></div></div><button class="x" data-close="1" aria-label="Close">×</button></div>
+  <div class="db">
+   <div class="kv"><div><small>Area manager</small><span>${esc(s.amEff)}</span></div><div><small>GST</small><span>${esc(s.gst||'—')}${s.gstAll.length>1?` <span class="muted">(+${esc(s.gstAll.slice(1).join(', '))})</span>`:''}</span></div><div><small>GST visit day</small><span>${esc(s.visitDay||'—')}</span></div><div><small>Visit cadence</small><span>${esc(s.cadence||'—')}</span></div><div><small>Last GST visit</small><span>${fmtDY(s.lastVisit)}</span></div><div><small>Installed</small><span>${esc(s.installQ||'—')}</span></div></div>
+   <div class="card"><h3>Growth <span class="src" style="text-transform:none;letter-spacing:0">${E.stage.label}${s.agg.nextHarvest?' · GST harvest estimate '+fmtDY(s.agg.nextHarvest):''}</span></h3><div class="stage">${stageNames.map((n,i)=>`<div class="${i<=E.stage.i?'on':''}">${n}</div>`).join('')}</div><div class="src">${E.H.n} harvest${E.H.n===1?'':'s'} logged${E.H.lbs?` · ${E.H.lbs.toFixed(1)} lb total`:''}. Stage is inferred from “seedlings planted?”, GST harvest estimate and harvest logs — it is only as current as the last report.</div></div>
+   ${als.length?`<div class="card"><h3>Alerts</h3>${als.map(a=>alertRow({a,st:alertState(code,a),r},true)).join('')}</div>`:''}
+   <div class="card"><h3>Weekly assets <span class="src" style="text-transform:none;letter-spacing:0">${cr.den?`${cr.ok}/${cr.den} done · ${cr.exc} off-cycle`:'not on the schedule'}</span></h3><div class="wk">${wk}</div><div class="src" style="margin-top:6px"><span class="chip c-ok">logged</span> <span class="chip" style="background:#CDE79A">make-up</span> <span class="chip c-high">missed</span> <span class="chip c-low">off-cycle (EOW/monthly)</span> <span class="chip c-n">not scheduled</span></div></div>
+   <div class="card"><h3>Score breakdown</h3><table class="mini ktbl"><thead><tr><th>Measure</th><th>Actual</th><th class="right">Points</th><th></th></tr></thead><tbody>${kt}</tbody></table></div>
+   <div class="card f"><h3>Notes &amp; follow-ups</h3>${nt||'<div class="muted">No notes yet.</div>'}
+     <textarea id="ntext" placeholder="Add a note — what you saw, who you spoke to, what's next…"></textarea>
+     <div class="row"><select id="ntype">${['General','Principal','Teacher change','Principal change','Follow-up','Harvest','Maintenance'].map(t=>`<option>${t}</option>`).join('')}</select><label class="src">Follow up by <input type="date" id="ndue"></label><label class="src"><input type="checkbox" id="npin"> Pin</label><button class="btn g s" id="nadd" style="margin-left:auto">Add note</button></div></div>
+   <div class="card f"><h3>Assignment</h3><div class="row"><label class="src">Area manager <select id="amsel">${uniq(['Unassigned',...Object.values(DATA.schools).map(x=>x.am),...Object.values(R).map(x=>x.s.amEff)]).map(a=>`<option ${a===s.amEff?'selected':''}>${esc(a)}</option>`).join('')}</select></label><button class="btn s d" id="amsave">Save assignment</button><button class="btn s d" id="exclude">Hide from dashboard (not a partner school / not mine)</button></div><div class="src">Assignment from asset files: ${esc(DATA.schools[code].am||'none')}${DATA.schools[code].amPhase1&&DATA.schools[code].amPhase1!==DATA.schools[code].am?` · phase-1 roster said ${esc(DATA.schools[code].amPhase1)}`:''}. Edits are stored in this browser.</div></div>
+   <details><summary>GST reports (latest ${s.reports.length} of ${s.nReports})</summary><table class="mini"><thead><tr><th>Date</th><th>GST</th><th>Systems</th><th>Seedlings</th><th>Teacher talk</th><th>Notes</th></tr></thead><tbody>${reps}</tbody></table></details>
+   <details><summary>Harvests (${s.harvest.length})</summary><table class="mini"><tbody>${H||'<tr><td class="muted">None logged this year.</td></tr>'}</tbody></table></details>
+   <details><summary>Area manager visits (${s.amv.length})</summary><table class="mini"><thead><tr><th>Date</th><th>AM</th><th>Principal/AP</th><th>Teacher</th><th>Curriculum</th><th>Lab / Teacher / Clean</th><th>Notes</th></tr></thead><tbody>${amv||'<tr><td class="muted" colspan="7">No AM visit on file this year.</td></tr>'}</tbody></table></details>
+   <details><summary>Ed team sessions (${s.ed.length})</summary><table class="mini"><thead><tr><th>Date</th><th>Session</th><th>Specialist</th><th>Teachers</th><th>Rubric</th><th>Notes</th></tr></thead><tbody>${ed||'<tr><td class="muted" colspan="6">No sessions on file.</td></tr>'}</tbody></table></details>
+  </div></aside>`;
+}
+function closeDrawer(){ UI.open=null; $('#ovl').innerHTML=''; }
+
+/* ===================== EVENTS ===================== */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-tab],[data-open],[data-close],[data-sort],[data-pg],[data-al],[data-go],[data-amq],[data-dig],[data-npin],[data-ndel],[data-rest]');
+  if(e.target.id==='nadd') return addNote();
+  if(e.target.id==='amsave'){ const v=$('#amsel').value; const c=UI.open; ST.ov[c]=ST.ov[c]||{}; if(v==='Unassigned'||v===DATA.schools[c].am) delete ST.ov[c].am; else ST.ov[c].am=v; save(); render(); toast('Assignment saved'); return; }
+  if(e.target.id==='exclude'){ if(confirm('Hide this school from the dashboard? You can restore it from Backup/import.')){ const c=UI.open; ST.ov[c]=ST.ov[c]||{}; ST.ov[c].excl=true; save(); closeDrawer(); render(); toast('Hidden'); } return; }
+  if(e.target.id==='clr'){ Object.assign(UI,{q:'',am:'',gst:'',boro:'',grade:'',stage:'',flag:'',page:0}); render(); return; }
+  if(e.target.id==='csv') return exportCSV();
+  if(e.target.id==='digest'){ const d=digestText(UI.aq.am); openDigest(UI.aq.am,d); return; }
+  if(e.target.id==='rbal'){ const on=UI.draft.kpis.filter(k=>k.on), tot=on.reduce((a,k)=>a+(+k.w||0),0)||1; on.forEach(k=>k.w=Math.max(0,Math.round(k.w/tot*100))); const diff=100-on.reduce((a,k)=>a+k.w,0); on.sort((a,b)=>b.w-a.w)[0].w+=diff; render(); return; }
+  if(e.target.id==='rrev'){ UI.draft=null; render(); return; }
+  if(e.target.id==='rsave'){ const note=$('#rnote').value.trim(); if(!note){toast('Add a reason for the change first.');return;} if(!ST.user){toast('Set your name first (top right).');return;}
+    ST.rubrics.push({v:ST.rubrics.length+1,ts:new Date().toISOString(),by:ST.user,note,cfg:clone(UI.draft)}); UI.draft=null; save(); render(); toast('Rubric saved as v'+ST.rubrics.length); return; }
+  if(e.target.id==='whoBtn'){ const n=prompt('Your name (shown on notes and rubric changes):',ST.user||''); if(n!=null){ST.user=n.trim();save();renderNav();} return; }
+  if(e.target.id==='expBtn') return backup();
+  if(!t) return;
+  if(t.dataset.close){ closeDrawer(); return; }
+  if(t.dataset.tab){ UI.tab=t.dataset.tab; closeDrawer(); render(); window.scrollTo(0,0); return; }
+  if(t.dataset.go){ e.preventDefault(); UI.tab=t.dataset.go; if(t.dataset.flag){UI.flag=t.dataset.flag;} render(); window.scrollTo(0,0); return; }
+  if(t.dataset.open){ e.preventDefault(); if(e.target.closest('[data-al]')&&!e.target.closest('a')&&e.target.dataset.open===undefined) {} UI.open=t.dataset.open; renderDrawer(UI.open); $('.drawer')?.scrollTo(0,0); return; }
+  if(t.dataset.sort){ const k=t.dataset.sort; if(UI.sort===k) UI.dir*=-1; else {UI.sort=k;UI.dir=(k==='name'||k==='am'||k==='gst')?1:-1;} drawTable(); return; }
+  if(t.dataset.pg){ UI.page+=+t.dataset.pg; drawTable(); return; }
+  if(t.dataset.amq){ UI.aq.am=t.dataset.amq; UI.tab='queue'; render(); return; }
+  if(t.dataset.dig){ openDigest(t.dataset.dig,digestText(t.dataset.dig)); return; }
+  if(t.dataset.rest){ const v=ST.rubrics.find(x=>x.v==t.dataset.rest); UI.draft=clone(v.cfg); render(); toast('Loaded v'+v.v+' as a draft'); return; }
+  if(t.dataset.npin){ const n=(ST.notes[UI.open]||[]).find(x=>x.id===t.dataset.npin); n.pin=!n.pin; save(); render(); return; }
+  if(t.dataset.ndel){ if(confirm('Delete this note?')){ ST.notes[UI.open]=ST.notes[UI.open].filter(x=>x.id!==t.dataset.ndel); save(); render(); } return; }
+  if(t.dataset.al){ const c=t.dataset.c, ru=t.dataset.r, a=R[c].al.find(x=>x.rule===ru); const k=c+'|'+ru, act=t.dataset.al;
+    if(act==='reopen') delete ST.alerts[k];
+    else { ST.alerts[k]={status:act,sig:a.sig,by:ST.user||'',at:new Date().toISOString(),until:act==='snooze'?new Date(Date.parse(activeCfg().settings.asOf)+14*864e5).toISOString().slice(0,10):null}; if(act==='snooze') ST.alerts[k].status='snoozed'; }
+    save(); if(UI.tab==='queue'){ render(); } else render(); return; }
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='q'){ UI.q=e.target.value; UI.page=0; drawTable(); return; }
+  const k=e.target.dataset.k; if(k&&UI.draft){ const kp=UI.draft.kpis.find(x=>x.id===k), p=e.target.dataset.p; kp[p]= p==='on'?e.target.checked : +e.target.value; if(p==='on'||p==='w'){ clearTimeout(window._rt); window._rt=setTimeout(()=>{ const pos=window.scrollY; render(); window.scrollTo(0,pos); },450);} }
+  if(e.target.dataset.s&&UI.draft){ draftSet(e.target.dataset.s,e.target.value); }
+});
+document.addEventListener('change',e=>{
+  const f=e.target.dataset.f; if(f){ UI[f]=e.target.value; UI.page=0; drawTable(); return; }
+  const aq=e.target.dataset.aq; if(aq){ UI.aq[aq]=e.target.value; drawQueue(); return; }
+  if(e.target.dataset.s&&UI.draft){ draftSet(e.target.dataset.s,e.target.value); render(); }
+  if(e.target.dataset.p==='on'){ render(); }
+});
+function addNote(){
+  const text=$('#ntext').value.trim(); if(!text){toast('Write something first.');return;}
+  if(!ST.user){ const n=prompt('Your name (so notes show who wrote them):',''); if(!n) return; ST.user=n.trim(); }
+  (ST.notes[UI.open]=ST.notes[UI.open]||[]).push({id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),ts:new Date().toISOString(),by:ST.user,type:$('#ntype').value,text,due:$('#ndue').value||null,pin:$('#npin').checked});
+  save(); render(); toast('Note saved');
+}
+function openDigest(am,d){
+  if(!d.n){toast('No open alerts to send'+(am?' for '+am:'')+'.');return;}
+  const url='mailto:?subject='+encodeURIComponent(d.subject)+'&body='+encodeURIComponent(d.body.slice(0,1700));
+  navigator.clipboard?.writeText(d.subject+'\n\n'+d.body).then(()=>toast('Digest copied to clipboard'),()=>{});
+  window.location.href=url;
+}
+function download(name,text,type){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function backup(){
+  const choice=prompt('Type EXPORT to download a backup of your notes, snoozes, assignments and rubric versions.\nType IMPORT to restore from a backup file.','EXPORT');
+  if(!choice) return;
+  if(choice.toUpperCase()==='EXPORT'){ download('nysw-dashboard-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(ST,null,1),'application/json'); }
+  else { const i=document.createElement('input'); i.type='file'; i.accept='.json'; i.onchange=()=>{ const f=i.files[0]; if(!f) return; f.text().then(t=>{ try{ const o=JSON.parse(t); if(!o.rubrics||!o.notes) throw 0; if(confirm('Replace everything saved in this browser with this backup?')){ ST=o; save(); UI.draft=null; render(); toast('Backup restored'); } }catch(e){ toast('That file is not a valid backup.'); } }); }; i.click(); }
+}
+function exportCSV(){
+  const q=s=>'"'+String(s??'').replace(/"/g,'""')+'"';
+  const rows=[['Code','School','Borough','Area manager','GST','Score','Grade','Data confidence','Assets completed','Last GST visit','Growth stage','Harvests','AM visits','Open alerts','Notes']];
+  filteredSchools().forEach(r=>rows.push([r.s.code,r.s.name,r.s.borough,r.s.amEff,r.s.gst,r.E.score!=null?r.E.score.toFixed(1):'',r.E.prov?'Provisional':r.E.grade,Math.round(r.E.conf*100)+'%',r.E.C.rate!=null?Math.round(r.E.C.rate*100)+'%':'',r.s.lastVisit,r.E.stage.label,r.E.H.n,r.s.amv.length,r.al.filter(a=>a.sev!=='upcoming'&&alertState(r.s.code,a)==='open').map(a=>a.title).join('; '),(ST.notes[r.s.code]||[]).map(n=>n.text).join(' | ')]));
+  download('partner-schools.csv',rows.map(r=>r.map(q).join(',')).join('\n'),'text/csv');
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&UI.open) closeDrawer(); });
+render();
+</script>
+</body>
+</html>
